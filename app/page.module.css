@@ -1,0 +1,113 @@
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.titulo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.containerInput {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 6px;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.3s ease;
+  background: #f8fafc;
+  box-sizing: border-box;
+  color: black;
+}
+
+.input:focus {
+  border-color: #34495e;
+  background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(52, 73, 94, 0.15);
+}
+
+.botao {
+  width: 100%;
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 6px;
+  margin-bottom: 20px;
+}
+
+.botao:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(52, 73, 94, 0.3);
+}
+
+.resultado {
+  background: rgba(52, 73, 94, 0.08);
+  border-radius: 12px;
+  padding: 18px;
+  margin-top: 16px;
+}
+
+.itemResultado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(52, 73, 94, 0.15);
+  font-size: 1rem;
+}
+
+.labelResultado {
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.valorResultado {
+  font-weight: 700;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
