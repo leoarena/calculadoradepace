@@ -4,10 +4,41 @@ import { useState } from "react";
 import styles from "./page.module.css";
 
 export default function Home() {
-  const [tempo, setTempo] = useState(""); // formato HH:MM:SS
+  const [tempo, setTempo] = useState("");
+  const [deletandoTempo, setDeletandoTempo] = useState(false);
   const [distancia, setDistancia] = useState("");
   const [pace, setPace] = useState("");
   const [velocidade, setVelocidade] = useState("");
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Backspace") setDeletandoTempo(true);
+    else setDeletandoTempo(false);
+  };
+
+  const formatarTempo = (valor: string): string => {
+    const valorSanitizado = valor.replace(/\D/g, "").slice(0, 6);
+
+    if ([3, 6].includes(tempo.length) && deletandoTempo) {
+      return tempo.slice(0, -2);
+    } else if (valorSanitizado.length < 2) {
+      return valorSanitizado;
+    } else if (valorSanitizado.length < 4) {
+      const horas = valorSanitizado.slice(0, 2);
+      const minutos = valorSanitizado.slice(2);
+      return `${horas}:${minutos}`;
+    } else {
+      const horas = valorSanitizado.slice(0, 2);
+      const minutos = valorSanitizado.slice(2, 4);
+      const segundos = valorSanitizado.slice(4);
+      return `${horas}:${minutos}:${segundos}`;
+    }
+  };
+
+  const handleTempoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const valorFormatado = formatarTempo(e.target.value);
+    setTempo(valorFormatado);
+    setTimeout(() => setDeletandoTempo(false), 10);
+  };
 
   const tempoParaSegundos = (tempo: string): number => {
     const [h, m, s] = tempo.split(":").map(Number);
@@ -45,11 +76,12 @@ export default function Home() {
           <input
             type="text"
             inputMode="numeric"
-            pattern="[0-9:]*"
             value={tempo}
-            onChange={(e) => setTempo(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onChange={handleTempoChange}
             placeholder="00:50:00"
             className={styles.input}
+            maxLength={8}
           />
         </div>
 
