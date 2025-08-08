@@ -15,6 +15,11 @@ export default function Home() {
     else setDeletandoTempo(false);
   };
 
+  const limitarMinutoSegundo = (valor: string): string => {
+    if (parseInt(valor) > 59) return "59";
+    else return valor;
+  };
+
   const formatarTempo = (valor: string): string => {
     const valorSanitizado = valor.replace(/\D/g, "").slice(0, 6);
 
@@ -24,12 +29,12 @@ export default function Home() {
       return valorSanitizado;
     } else if (valorSanitizado.length < 4) {
       const horas = valorSanitizado.slice(0, 2);
-      const minutos = valorSanitizado.slice(2);
+      const minutos = limitarMinutoSegundo(valorSanitizado.slice(2));
       return `${horas}:${minutos}`;
     } else {
       const horas = valorSanitizado.slice(0, 2);
-      const minutos = valorSanitizado.slice(2, 4);
-      const segundos = valorSanitizado.slice(4);
+      const minutos = limitarMinutoSegundo(valorSanitizado.slice(2, 4));
+      const segundos = limitarMinutoSegundo(valorSanitizado.slice(4));
       return `${horas}:${minutos}:${segundos}`;
     }
   };
@@ -61,7 +66,6 @@ export default function Home() {
     }
     const paceEmSegundos = totalSegundos / km;
     const velocidadeEmKmh = (km / (totalSegundos / 3600)).toFixed(2);
-
     setPace(formatarSegundosParaPace(paceEmSegundos));
     setVelocidade(`${velocidadeEmKmh} km/h`);
   }
