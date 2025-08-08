@@ -9,16 +9,16 @@ export default function Home() {
   const [pace, setPace] = useState("");
   const [velocidade, setVelocidade] = useState("");
 
-  function tempoParaSegundos(tempo: string): number {
+  const tempoParaSegundos = (tempo: string): number => {
     const [h, m, s] = tempo.split(":").map(Number);
     return h * 3600 + m * 60 + s;
-  }
+  };
 
-  function formatarSegundosParaPace(segundosPace: number): string {
+  const formatarSegundosParaPace = (segundosPace: number): string => {
     const minutos = Math.floor(segundosPace / 60);
     const segundos = Math.round(segundosPace % 60);
     return `${minutos}:${segundos.toString().padStart(2, "0")} min/km`;
-  }
+  };
 
   function calcular() {
     const totalSegundos = tempoParaSegundos(tempo);
@@ -28,7 +28,6 @@ export default function Home() {
       setVelocidade("");
       return;
     }
-
     const paceEmSegundos = totalSegundos / km;
     const velocidadeEmKmh = (km / (totalSegundos / 3600)).toFixed(2);
 
