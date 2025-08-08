@@ -44,6 +44,8 @@ export default function Home() {
           <label className={styles.label}>Tempo (HH:MM:SS)</label>
           <input
             type="text"
+            inputMode="numeric"
+            pattern="[0-9:]*"
             value={tempo}
             onChange={(e) => setTempo(e.target.value)}
             placeholder="00:50:00"
@@ -55,6 +57,7 @@ export default function Home() {
           <label className={styles.label}>Distância (km)</label>
           <input
             type="number"
+            inputMode="decimal"
             step="0.01"
             value={distancia}
             onChange={(e) => setDistancia(e.target.value)}
@@ -63,10 +66,7 @@ export default function Home() {
           />
         </div>
 
-        <button
-          onClick={calcular}
-          className={styles.botao}
-        >
+        <button onClick={calcular} className={styles.botao}>
           Calcular
         </button>
 
