@@ -4,13 +4,15 @@ import { useState, useRef } from "react";
 import styles from "./page.module.css";
 
 export default function Home() {
-  const [tempo, setTempo] = useState("");
-  const tempoRef = useRef<HTMLInputElement>(null);
-  const [deletandoTempo, setDeletandoTempo] = useState(false);
   const [distancia, setDistancia] = useState("");
-  const distanciaRef = useRef<HTMLInputElement>(null);
+  const [tempo, setTempo] = useState("");
+  const [deletandoTempo, setDeletandoTempo] = useState(false);
   const [pace, setPace] = useState("");
   const [velocidade, setVelocidade] = useState("");
+
+  const distanciaRef = useRef<HTMLInputElement>(null);
+  const tempoRef = useRef<HTMLInputElement>(null);
+  const mainRef = useRef<HTMLElement>(null);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Backspace") setDeletandoTempo(true);
@@ -32,8 +34,7 @@ export default function Home() {
     setDistancia("");
     setPace("");
     setVelocidade("");
-    distanciaRef.current?.blur();
-    tempoRef.current?.blur();
+    ajustarFoco();
   };
 
   const limitarMinutoSegundo = (valor: string): string => {
@@ -86,6 +87,12 @@ export default function Home() {
     return `${minutos}:${segundos.toString().padStart(2, "0")} min/km`;
   };
 
+  const ajustarFoco = () => {
+    distanciaRef.current?.blur();
+    tempoRef.current?.blur();
+    mainRef.current?.focus();
+  };
+
   function calcular() {
     const totalSegundos = tempoParaSegundos(tempo);
     const km = parseFloat(distancia);
@@ -98,8 +105,7 @@ export default function Home() {
     const velocidadeEmKmh = (km / (totalSegundos / 3600)).toFixed(2);
     setPace(formatarSegundosParaPace(paceEmSegundos));
     setVelocidade(`${velocidadeEmKmh} km/h`);
-    distanciaRef.current?.blur();
-    tempoRef.current?.blur();
+    ajustarFoco();
   }
 
   return (
@@ -107,6 +113,7 @@ export default function Home() {
       className={styles.container}
       onKeyDown={handleGlobalKeyDown}
       tabIndex={0}
+      ref={mainRef}
     >
       <div className={styles.card}>
         <h1 className={styles.titulo}>Calculadora de Pace</h1>
