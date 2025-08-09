@@ -28,13 +28,13 @@ export default function Home() {
       e.preventDefault();
       switch (calculo) {
         case "pace":
-          calcular();
+          calcularPace();
           break;
         case "tempo":
-          calcularAPartirDoPace();
+          calcularTempo();
           break;
         default:
-          calcular();
+          calcularPace();
       }
     } else if (e.key === "Escape") {
       e.preventDefault();
@@ -43,12 +43,12 @@ export default function Home() {
   };
 
   const limparCampos = () => {
-    setTempoInput("");
     setDistanciaInput("");
-    setPaceResultado("");
-    setVelocidadeResultado("");
+    setTempoInput("");
     setPaceInput("");
+    setPaceResultado("");
     setTempoResultado("");
+    setVelocidadeResultado("");
     ajustarFoco();
   };
 
@@ -57,7 +57,7 @@ export default function Home() {
     else return valor;
   };
 
-  const formatarTempo = (valor: string): string => {
+  const formatarTempoInput = (valor: string): string => {
     const valorSanitizado = valor.replace(/\D/g, "").slice(0, 6);
 
     if ([3, 6].includes(tempoInput.length) && deletandoTempoInput) {
@@ -76,21 +76,21 @@ export default function Home() {
     }
   };
 
-  const handleTempoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const valorFormatado = formatarTempo(e.target.value);
+  const handleTempoInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const valorFormatado = formatarTempoInput(e.target.value);
     setTempoInput(valorFormatado);
     setPaceResultado("");
     setVelocidadeResultado("");
     setTimeout(() => setDeletandoTempoInput(false), 10);
   };
 
-  const handleDistanciaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDistanciaInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDistanciaInput(e.target.value);
     setPaceResultado("");
     setVelocidadeResultado("");
   };
 
-  const tempoParaSegundos = (tempo: string): number => {
+  const tempoInputParaSegundos = (tempo: string): number => {
     const [horas, minutos, segundos] = tempo.split(":").map(Number);
     const totalSegundos = horas * 3600 + minutos * 60 + segundos;
     return totalSegundos;
@@ -137,7 +137,7 @@ export default function Home() {
     return minutos * 60 + segundos;
   };
 
-  const calcularAPartirDoPace = () => {
+  const calcularTempo = () => {
     const km = parseFloat(distanciaInput);
     const paceSegundos = paceParaSegundos(paceInput);
     if (!km || km === 0 || !paceSegundos || paceSegundos === 0) {
@@ -152,8 +152,8 @@ export default function Home() {
     ajustarFoco();
   };
 
-  function calcular() {
-    const totalSegundos = tempoParaSegundos(tempoInput);
+  function calcularPace() {
+    const totalSegundos = tempoInputParaSegundos(tempoInput);
     const km = parseFloat(distanciaInput);
     if (!km || km === 0 || isNaN(totalSegundos) || totalSegundos === 0) {
       setPaceResultado("");
@@ -184,7 +184,7 @@ export default function Home() {
             inputMode="decimal"
             step="0.01"
             value={distanciaInput}
-            onChange={handleDistanciaChange}
+            onChange={handleDistanciaInputChange}
             placeholder="10"
             className={styles.input}
             ref={distanciaInputRef}
@@ -199,7 +199,7 @@ export default function Home() {
               inputMode="numeric"
               value={tempoInput}
               onKeyDown={handleKeyDown}
-              onChange={handleTempoChange}
+              onChange={handleTempoInputChange}
               placeholder="00:50:00"
               className={styles.input}
               maxLength={8}
@@ -223,7 +223,7 @@ export default function Home() {
         )}
 
         <button
-          onClick={calculo === "pace" ? calcular : calcularAPartirDoPace}
+          onClick={calculo === "pace" ? calcularPace : calcularTempo}
           className={styles.botao}
         >
           Calcular
