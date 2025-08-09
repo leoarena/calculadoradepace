@@ -106,7 +106,7 @@ export default function Home() {
           Calcular
         </button>
 
-        {pace && velocidade && (
+        {tempo.length === 8 && pace && velocidade && (
           <div className={styles.resultado}>
             <div className={styles.itemResultado}>
               <span className={styles.labelResultado}>Pace:</span>
