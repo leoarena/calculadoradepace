@@ -76,6 +76,19 @@ export default function Home() {
         <h1 className={styles.titulo}>Calculadora de Pace</h1>
 
         <div className={styles.containerInput}>
+          <label className={styles.label}>Distância (km)</label>
+          <input
+            type="number"
+            inputMode="decimal"
+            step="0.01"
+            value={distancia}
+            onChange={(e) => setDistancia(e.target.value)}
+            placeholder="10"
+            className={styles.input}
+          />
+        </div>
+
+        <div className={styles.containerInput}>
           <label className={styles.label}>Tempo (HH:MM:SS)</label>
           <input
             type="text"
@@ -86,19 +99,6 @@ export default function Home() {
             placeholder="00:50:00"
             className={styles.input}
             maxLength={8}
-          />
-        </div>
-
-        <div className={styles.containerInput}>
-          <label className={styles.label}>Distância (km)</label>
-          <input
-            type="number"
-            inputMode="decimal"
-            step="0.01"
-            value={distancia}
-            onChange={(e) => setDistancia(e.target.value)}
-            placeholder="10"
-            className={styles.input}
           />
         </div>
 
