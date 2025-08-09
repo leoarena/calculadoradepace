@@ -4,14 +4,18 @@ import { useState, useRef } from "react";
 import styles from "./page.module.css";
 
 export default function Home() {
+  const [calculo, setCalculo] = useState<"pace" | "tempo">("pace");
   const [distancia, setDistancia] = useState("");
   const [tempo, setTempo] = useState("");
   const [deletandoTempo, setDeletandoTempo] = useState(false);
   const [pace, setPace] = useState("");
   const [velocidade, setVelocidade] = useState("");
+  const [paceInput, setPaceInput] = useState("");
+  const [tempoResultado, setTempoResultado] = useState("");
 
   const distanciaRef = useRef<HTMLInputElement>(null);
   const tempoRef = useRef<HTMLInputElement>(null);
+  const paceInputRef = useRef<HTMLInputElement>(null);
   const mainRef = useRef<HTMLElement>(null);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -22,7 +26,16 @@ export default function Home() {
   const handleGlobalKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      calcular();
+      switch (calculo) {
+        case "pace":
+          calcular();
+          break;
+        case "tempo":
+          calcularAPartirDoPace();
+          break;
+        default:
+          calcular();
+      }
     } else if (e.key === "Escape") {
       e.preventDefault();
       limparCampos();
@@ -34,6 +47,8 @@ export default function Home() {
     setDistancia("");
     setPace("");
     setVelocidade("");
+    setPaceInput("");
+    setTempoResultado("");
     ajustarFoco();
   };
 
@@ -90,7 +105,51 @@ export default function Home() {
   const ajustarFoco = () => {
     distanciaRef.current?.blur();
     tempoRef.current?.blur();
+    paceInputRef.current?.blur();
     mainRef.current?.focus();
+  };
+
+  const alternarModo = () => {
+    setCalculo(calculo === "pace" ? "tempo" : "pace");
+    limparCampos();
+  };
+
+  const handlePaceInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPaceInput(e.target.value);
+    setTempoResultado("");
+    setVelocidade("");
+  };
+
+  const formatarSegundosParaTempo = (totalSegundos: number): string => {
+    const horas = Math.floor(totalSegundos / 3600);
+    const minutos = Math.floor((totalSegundos % 3600) / 60);
+    const segundos = Math.round(totalSegundos % 60);
+    return `${horas.toString().padStart(2, "0")}:${minutos
+      .toString()
+      .padStart(2, "0")}:${segundos.toString().padStart(2, "0")}`;
+  };
+
+  const paceParaSegundos = (pace: string): number => {
+    const match = pace.match(/(\d+):(\d+)/);
+    if (!match) return 0;
+    const minutos = parseInt(match[1]);
+    const segundos = parseInt(match[2]);
+    return minutos * 60 + segundos;
+  };
+
+  const calcularAPartirDoPace = () => {
+    const km = parseFloat(distancia);
+    const paceSegundos = paceParaSegundos(paceInput);
+    if (!km || km === 0 || !paceSegundos || paceSegundos === 0) {
+      setTempoResultado("");
+      setVelocidade("");
+      return;
+    }
+    const totalSegundos = paceSegundos * km;
+    const velocidadeEmKmh = (km / (totalSegundos / 3600)).toFixed(2);
+    setTempoResultado(formatarSegundosParaTempo(totalSegundos));
+    setVelocidade(`${velocidadeEmKmh} km/h`);
+    ajustarFoco();
   };
 
   function calcular() {
@@ -132,30 +191,73 @@ export default function Home() {
           />
         </div>
 
-        <div className={styles.containerInput}>
-          <label className={styles.label}>Tempo (HH:MM:SS)</label>
-          <input
-            type="text"
-            inputMode="numeric"
-            value={tempo}
-            onKeyDown={handleKeyDown}
-            onChange={handleTempoChange}
-            placeholder="00:50:00"
-            className={styles.input}
-            maxLength={8}
-            ref={tempoRef}
-          />
-        </div>
+        {calculo === "pace" ? (
+          <div className={styles.containerInput}>
+            <label className={styles.label}>Tempo (HH:MM:SS)</label>
+            <input
+              type="text"
+              inputMode="numeric"
+              value={tempo}
+              onKeyDown={handleKeyDown}
+              onChange={handleTempoChange}
+              placeholder="00:50:00"
+              className={styles.input}
+              maxLength={8}
+              ref={tempoRef}
+            />
+          </div>
+        ) : (
+          <div className={styles.containerInput}>
+            <label className={styles.label}>Pace (MM:SS min/km)</label>
+            <input
+              type="text"
+              inputMode="numeric"
+              value={paceInput}
+              onChange={handlePaceInputChange}
+              placeholder="5:00"
+              className={styles.input}
+              maxLength={5}
+              ref={paceInputRef}
+            />
+          </div>
+        )}
 
-        <button onClick={calcular} className={styles.botao}>
+        <button
+          onClick={calculo === "pace" ? calcular : calcularAPartirDoPace}
+          className={styles.botao}
+        >
           Calcular
         </button>
 
-        {tempo.length === 8 && pace && velocidade && (
+        <button onClick={alternarModo} className={styles.linkAlternar}>
+          {calculo === "pace"
+            ? "Calcular a partir do pace"
+            : "Calcular a partir do tempo"}
+        </button>
+
+        {calculo === "pace" && tempo.length === 8 && pace && velocidade && (
           <div className={styles.resultado}>
             <div className={styles.itemResultado}>
               <span className={styles.labelResultado}>Pace:</span>
               <span className={styles.valorResultado}>{pace || "—"}</span>
+            </div>
+            <div
+              className={styles.itemResultado}
+              style={{ borderBottom: "none" }}
+            >
+              <span className={styles.labelResultado}>Velocidade:</span>
+              <span className={styles.valorResultado}>{velocidade || "—"}</span>
+            </div>
+          </div>
+        )}
+
+        {calculo === "tempo" && tempoResultado && velocidade && (
+          <div className={styles.resultado}>
+            <div className={styles.itemResultado}>
+              <span className={styles.labelResultado}>Tempo:</span>
+              <span className={styles.valorResultado}>
+                {tempoResultado || "—"}
+              </span>
             </div>
             <div
               className={styles.itemResultado}
