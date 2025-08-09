@@ -42,7 +42,15 @@ export default function Home() {
   const handleTempoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const valorFormatado = formatarTempo(e.target.value);
     setTempo(valorFormatado);
+    setPace("");
+    setVelocidade("");
     setTimeout(() => setDeletandoTempo(false), 10);
+  };
+
+  const handleDistanciaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDistancia(e.target.value);
+    setPace("");
+    setVelocidade("");
   };
 
   const tempoParaSegundos = (tempo: string): number => {
@@ -83,7 +91,7 @@ export default function Home() {
             inputMode="decimal"
             step="0.01"
             value={distancia}
-            onChange={(e) => setDistancia(e.target.value)}
+            onChange={handleDistanciaChange}
             placeholder="10"
             className={styles.input}
           />
