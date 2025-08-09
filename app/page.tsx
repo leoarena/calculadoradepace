@@ -46,8 +46,9 @@ export default function Home() {
   };
 
   const tempoParaSegundos = (tempo: string): number => {
-    const [h, m, s] = tempo.split(":").map(Number);
-    return h * 3600 + m * 60 + s;
+    const [horas, minutos, segundos] = tempo.split(":").map(Number);
+    const totalSegundos = horas * 3600 + minutos * 60 + segundos;
+    return totalSegundos;
   };
 
   const formatarSegundosParaPace = (segundosPace: number): string => {
