@@ -5,22 +5,22 @@ import styles from "./page.module.css";
 
 export default function Home() {
   const [calculo, setCalculo] = useState<"pace" | "tempo">("pace");
-  const [distancia, setDistancia] = useState("");
-  const [tempo, setTempo] = useState("");
-  const [deletandoTempo, setDeletandoTempo] = useState(false);
-  const [pace, setPace] = useState("");
-  const [velocidade, setVelocidade] = useState("");
+  const [distanciaInput, setDistanciaInput] = useState("");
+  const [tempoInput, setTempoInput] = useState("");
+  const [deletandoTempoInput, setDeletandoTempoInput] = useState(false);
   const [paceInput, setPaceInput] = useState("");
+  const [paceResultado, setPaceResultado] = useState("");
   const [tempoResultado, setTempoResultado] = useState("");
+  const [velocidadeResultado, setVelocidadeResultado] = useState("");
 
-  const distanciaRef = useRef<HTMLInputElement>(null);
-  const tempoRef = useRef<HTMLInputElement>(null);
+  const distanciaInputRef = useRef<HTMLInputElement>(null);
+  const tempoInputRef = useRef<HTMLInputElement>(null);
   const paceInputRef = useRef<HTMLInputElement>(null);
   const mainRef = useRef<HTMLElement>(null);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Backspace") setDeletandoTempo(true);
-    else setDeletandoTempo(false);
+    if (e.key === "Backspace") setDeletandoTempoInput(true);
+    else setDeletandoTempoInput(false);
   };
 
   const handleGlobalKeyDown = (e: React.KeyboardEvent) => {
@@ -43,10 +43,10 @@ export default function Home() {
   };
 
   const limparCampos = () => {
-    setTempo("");
-    setDistancia("");
-    setPace("");
-    setVelocidade("");
+    setTempoInput("");
+    setDistanciaInput("");
+    setPaceResultado("");
+    setVelocidadeResultado("");
     setPaceInput("");
     setTempoResultado("");
     ajustarFoco();
@@ -60,8 +60,8 @@ export default function Home() {
   const formatarTempo = (valor: string): string => {
     const valorSanitizado = valor.replace(/\D/g, "").slice(0, 6);
 
-    if ([3, 6].includes(tempo.length) && deletandoTempo) {
-      return tempo.slice(0, -2);
+    if ([3, 6].includes(tempoInput.length) && deletandoTempoInput) {
+      return tempoInput.slice(0, -2);
     } else if (valorSanitizado.length < 2) {
       return valorSanitizado;
     } else if (valorSanitizado.length < 4) {
@@ -78,16 +78,16 @@ export default function Home() {
 
   const handleTempoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const valorFormatado = formatarTempo(e.target.value);
-    setTempo(valorFormatado);
-    setPace("");
-    setVelocidade("");
-    setTimeout(() => setDeletandoTempo(false), 10);
+    setTempoInput(valorFormatado);
+    setPaceResultado("");
+    setVelocidadeResultado("");
+    setTimeout(() => setDeletandoTempoInput(false), 10);
   };
 
   const handleDistanciaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDistancia(e.target.value);
-    setPace("");
-    setVelocidade("");
+    setDistanciaInput(e.target.value);
+    setPaceResultado("");
+    setVelocidadeResultado("");
   };
 
   const tempoParaSegundos = (tempo: string): number => {
@@ -103,8 +103,8 @@ export default function Home() {
   };
 
   const ajustarFoco = () => {
-    distanciaRef.current?.blur();
-    tempoRef.current?.blur();
+    distanciaInputRef.current?.blur();
+    tempoInputRef.current?.blur();
     paceInputRef.current?.blur();
     mainRef.current?.focus();
   };
@@ -117,7 +117,7 @@ export default function Home() {
   const handlePaceInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPaceInput(e.target.value);
     setTempoResultado("");
-    setVelocidade("");
+    setVelocidadeResultado("");
   };
 
   const formatarSegundosParaTempo = (totalSegundos: number): string => {
@@ -138,32 +138,32 @@ export default function Home() {
   };
 
   const calcularAPartirDoPace = () => {
-    const km = parseFloat(distancia);
+    const km = parseFloat(distanciaInput);
     const paceSegundos = paceParaSegundos(paceInput);
     if (!km || km === 0 || !paceSegundos || paceSegundos === 0) {
       setTempoResultado("");
-      setVelocidade("");
+      setVelocidadeResultado("");
       return;
     }
     const totalSegundos = paceSegundos * km;
     const velocidadeEmKmh = (km / (totalSegundos / 3600)).toFixed(2);
     setTempoResultado(formatarSegundosParaTempo(totalSegundos));
-    setVelocidade(`${velocidadeEmKmh} km/h`);
+    setVelocidadeResultado(`${velocidadeEmKmh} km/h`);
     ajustarFoco();
   };
 
   function calcular() {
-    const totalSegundos = tempoParaSegundos(tempo);
-    const km = parseFloat(distancia);
+    const totalSegundos = tempoParaSegundos(tempoInput);
+    const km = parseFloat(distanciaInput);
     if (!km || km === 0 || isNaN(totalSegundos) || totalSegundos === 0) {
-      setPace("");
-      setVelocidade("");
+      setPaceResultado("");
+      setVelocidadeResultado("");
       return;
     }
     const paceEmSegundos = totalSegundos / km;
     const velocidadeEmKmh = (km / (totalSegundos / 3600)).toFixed(2);
-    setPace(formatarSegundosParaPace(paceEmSegundos));
-    setVelocidade(`${velocidadeEmKmh} km/h`);
+    setPaceResultado(formatarSegundosParaPace(paceEmSegundos));
+    setVelocidadeResultado(`${velocidadeEmKmh} km/h`);
     ajustarFoco();
   }
 
@@ -183,11 +183,11 @@ export default function Home() {
             type="number"
             inputMode="decimal"
             step="0.01"
-            value={distancia}
+            value={distanciaInput}
             onChange={handleDistanciaChange}
             placeholder="10"
             className={styles.input}
-            ref={distanciaRef}
+            ref={distanciaInputRef}
           />
         </div>
 
@@ -197,13 +197,13 @@ export default function Home() {
             <input
               type="text"
               inputMode="numeric"
-              value={tempo}
+              value={tempoInput}
               onKeyDown={handleKeyDown}
               onChange={handleTempoChange}
               placeholder="00:50:00"
               className={styles.input}
               maxLength={8}
-              ref={tempoRef}
+              ref={tempoInputRef}
             />
           </div>
         ) : (
@@ -235,23 +235,23 @@ export default function Home() {
             : "Calcular a partir do tempo"}
         </button>
 
-        {calculo === "pace" && tempo.length === 8 && pace && velocidade && (
+        {calculo === "pace" && tempoInput.length === 8 && paceResultado && velocidadeResultado && (
           <div className={styles.resultado}>
             <div className={styles.itemResultado}>
               <span className={styles.labelResultado}>Pace:</span>
-              <span className={styles.valorResultado}>{pace || "—"}</span>
+              <span className={styles.valorResultado}>{paceResultado || "—"}</span>
             </div>
             <div
               className={styles.itemResultado}
               style={{ borderBottom: "none" }}
             >
               <span className={styles.labelResultado}>Velocidade:</span>
-              <span className={styles.valorResultado}>{velocidade || "—"}</span>
+              <span className={styles.valorResultado}>{velocidadeResultado || "—"}</span>
             </div>
           </div>
         )}
 
-        {calculo === "tempo" && tempoResultado && velocidade && (
+        {calculo === "tempo" && tempoResultado && velocidadeResultado && (
           <div className={styles.resultado}>
             <div className={styles.itemResultado}>
               <span className={styles.labelResultado}>Tempo:</span>
@@ -264,7 +264,7 @@ export default function Home() {
               style={{ borderBottom: "none" }}
             >
               <span className={styles.labelResultado}>Velocidade:</span>
-              <span className={styles.valorResultado}>{velocidade || "—"}</span>
+              <span className={styles.valorResultado}>{velocidadeResultado || "—"}</span>
             </div>
           </div>
         )}
