@@ -3,12 +3,14 @@ import styles from "../page.module.css";
 interface InputPaceProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   inputRef: React.RefObject<HTMLInputElement | null>;
 }
 
 export default function InputPace({
   value,
   onChange,
+  onKeyDown,
   inputRef,
 }: InputPaceProps) {
   return (
@@ -19,7 +21,8 @@ export default function InputPace({
         inputMode="numeric"
         value={value}
         onChange={onChange}
-        placeholder="5:00"
+        onKeyDown={onKeyDown}
+        placeholder="05:00"
         className={styles.input}
         maxLength={5}
         ref={inputRef}
