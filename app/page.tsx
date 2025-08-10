@@ -11,6 +11,7 @@ import {
 } from "./utils/formatters";
 import InputDistancia from "./components/InputDistancia";
 import InputTempo from "./components/InputTempo";
+import InputPace from "./components/InputPace";
 
 export default function Home() {
   const [calculo, setCalculo] = useState<"pace" | "tempo">("pace");
@@ -168,19 +169,11 @@ export default function Home() {
             inputRef={tempoInputRef}
           />
         ) : (
-          <div className={styles.containerInput}>
-            <label className={styles.label}>Pace (MM:SS min/km)</label>
-            <input
-              type="text"
-              inputMode="numeric"
-              value={paceInput}
-              onChange={handlePaceInputChange}
-              placeholder="5:00"
-              className={styles.input}
-              maxLength={5}
-              ref={paceInputRef}
-            />
-          </div>
+          <InputPace
+            value={paceInput}
+            onChange={handlePaceInputChange}
+            inputRef={paceInputRef}
+          />
         )}
 
         <button
