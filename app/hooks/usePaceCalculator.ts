@@ -13,6 +13,7 @@ export const usePaceCalculator = () => {
   const [tempoInput, setTempoInput] = useState("");
   const [deletandoTempoInput, setDeletandoTempoInput] = useState(false);
   const [paceInput, setPaceInput] = useState("");
+  const [deletandoPaceInput, setDeletandoPaceInput] = useState(false);
   const [paceResultado, setPaceResultado] = useState("");
   const [tempoResultado, setTempoResultado] = useState("");
   const [velocidadeResultado, setVelocidadeResultado] = useState("");
@@ -41,6 +42,20 @@ export const usePaceCalculator = () => {
     }
   };
 
+  const formatarPaceInput = (valor: string): string => {
+    const valorSanitizado = valor.replace(/\D/g, "").slice(0, 4);
+
+    if (paceInput.length === 3 && deletandoPaceInput) {
+      return paceInput.slice(0, -2);
+    } else if (valorSanitizado.length < 2) {
+      return valorSanitizado;
+    } else {
+      const minutos = limitarMinutoSegundo(valorSanitizado.slice(0, 2));
+      const segundos = limitarMinutoSegundo(valorSanitizado.slice(2));
+      return `${minutos}:${segundos}`;
+    }
+  };
+
   const ajustarFoco = () => {
     distanciaInputRef.current?.blur();
     tempoInputRef.current?.blur();
@@ -66,6 +81,11 @@ export const usePaceCalculator = () => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Backspace") setDeletandoTempoInput(true);
     else setDeletandoTempoInput(false);
+  };
+
+  const handlePaceInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Backspace") setDeletandoPaceInput(true);
+    else setDeletandoPaceInput(false);
   };
 
   const handleGlobalKeyDown = (e: React.KeyboardEvent) => {
@@ -104,9 +124,11 @@ export const usePaceCalculator = () => {
   };
 
   const handlePaceInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPaceInput(e.target.value);
+    const valorFormatado = formatarPaceInput(e.target.value);
+    setPaceInput(valorFormatado);
     setTempoResultado("");
     setVelocidadeResultado("");
+    setTimeout(() => setDeletandoPaceInput(false), 10);
   };
 
   const calcularPace = () => {
@@ -157,6 +179,7 @@ export const usePaceCalculator = () => {
     limparCampos,
     alternarModo,
     handleKeyDown,
+    handlePaceInputKeyDown,
     handleGlobalKeyDown,
     handleTempoInputChange,
     handleDistanciaInputChange,
