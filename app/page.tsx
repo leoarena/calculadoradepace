@@ -5,6 +5,7 @@ import InputDistancia from "./components/InputDistancia";
 import InputTempo from "./components/InputTempo";
 import InputPace from "./components/InputPace";
 import { usePaceCalculator } from "./hooks/usePaceCalculator";
+import Resultado from "./components/Resultado";
 
 export default function Home() {
   const {
@@ -77,43 +78,19 @@ export default function Home() {
           tempoInput.length === 8 &&
           paceResultado &&
           velocidadeResultado && (
-            <div className={styles.resultado}>
-              <div className={styles.itemResultado}>
-                <span className={styles.labelResultado}>Pace:</span>
-                <span className={styles.valorResultado}>
-                  {paceResultado || "—"}
-                </span>
-              </div>
-              <div
-                className={styles.itemResultado}
-                style={{ borderBottom: "none" }}
-              >
-                <span className={styles.labelResultado}>Velocidade:</span>
-                <span className={styles.valorResultado}>
-                  {velocidadeResultado || "—"}
-                </span>
-              </div>
-            </div>
+            <Resultado
+              titulo="Pace"
+              valor={paceResultado}
+              velocidade={velocidadeResultado}
+            />
           )}
 
         {calculo === "tempo" && tempoResultado && velocidadeResultado && (
-          <div className={styles.resultado}>
-            <div className={styles.itemResultado}>
-              <span className={styles.labelResultado}>Tempo:</span>
-              <span className={styles.valorResultado}>
-                {tempoResultado || "—"}
-              </span>
-            </div>
-            <div
-              className={styles.itemResultado}
-              style={{ borderBottom: "none" }}
-            >
-              <span className={styles.labelResultado}>Velocidade:</span>
-              <span className={styles.valorResultado}>
-                {velocidadeResultado || "—"}
-              </span>
-            </div>
-          </div>
+          <Resultado
+            titulo="Tempo"
+            valor={tempoResultado}
+            velocidade={velocidadeResultado}
+          />
         )}
       </div>
     </main>
