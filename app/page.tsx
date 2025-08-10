@@ -84,7 +84,9 @@ export default function Home() {
     setTimeout(() => setDeletandoTempoInput(false), 10);
   };
 
-  const handleDistanciaInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDistanciaInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setDistanciaInput(e.target.value);
     setPaceResultado("");
     setVelocidadeResultado("");
@@ -152,9 +154,9 @@ export default function Home() {
     ajustarFoco();
   };
 
-  function calcularPace() {
-    const totalSegundos = tempoInputParaSegundos(tempoInput);
+  const calcularPace = () => {
     const km = parseFloat(distanciaInput);
+    const totalSegundos = tempoInputParaSegundos(tempoInput);
     if (!km || km === 0 || isNaN(totalSegundos) || totalSegundos === 0) {
       setPaceResultado("");
       setVelocidadeResultado("");
@@ -165,7 +167,7 @@ export default function Home() {
     setPaceResultado(formatarSegundosParaPace(paceEmSegundos));
     setVelocidadeResultado(`${velocidadeEmKmh} km/h`);
     ajustarFoco();
-  }
+  };
 
   return (
     <main
@@ -235,21 +237,28 @@ export default function Home() {
             : "Calcular a partir do tempo"}
         </button>
 
-        {calculo === "pace" && tempoInput.length === 8 && paceResultado && velocidadeResultado && (
-          <div className={styles.resultado}>
-            <div className={styles.itemResultado}>
-              <span className={styles.labelResultado}>Pace:</span>
-              <span className={styles.valorResultado}>{paceResultado || "—"}</span>
+        {calculo === "pace" &&
+          tempoInput.length === 8 &&
+          paceResultado &&
+          velocidadeResultado && (
+            <div className={styles.resultado}>
+              <div className={styles.itemResultado}>
+                <span className={styles.labelResultado}>Pace:</span>
+                <span className={styles.valorResultado}>
+                  {paceResultado || "—"}
+                </span>
+              </div>
+              <div
+                className={styles.itemResultado}
+                style={{ borderBottom: "none" }}
+              >
+                <span className={styles.labelResultado}>Velocidade:</span>
+                <span className={styles.valorResultado}>
+                  {velocidadeResultado || "—"}
+                </span>
+              </div>
             </div>
-            <div
-              className={styles.itemResultado}
-              style={{ borderBottom: "none" }}
-            >
-              <span className={styles.labelResultado}>Velocidade:</span>
-              <span className={styles.valorResultado}>{velocidadeResultado || "—"}</span>
-            </div>
-          </div>
-        )}
+          )}
 
         {calculo === "tempo" && tempoResultado && velocidadeResultado && (
           <div className={styles.resultado}>
@@ -264,7 +273,9 @@ export default function Home() {
               style={{ borderBottom: "none" }}
             >
               <span className={styles.labelResultado}>Velocidade:</span>
-              <span className={styles.valorResultado}>{velocidadeResultado || "—"}</span>
+              <span className={styles.valorResultado}>
+                {velocidadeResultado || "—"}
+              </span>
             </div>
           </div>
         )}
