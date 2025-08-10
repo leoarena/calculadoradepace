@@ -25,11 +25,9 @@ const formatarSegundosParaTempo = (totalSegundos: number): string => {
 };
 
 const paceParaSegundos = (pace: string): number => {
-  const match = pace.match(/(\d+):(\d+)/);
-  if (!match) return 0;
-  const minutos = parseInt(match[1]);
-  const segundos = parseInt(match[2]);
-  return minutos * 60 + segundos;
+  const [minutos, segundos] = pace.split(":").map(Number);
+  const totalSegundos = minutos * 60 + segundos;
+  return totalSegundos;
 };
 
 export {

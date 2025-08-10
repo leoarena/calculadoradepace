@@ -149,7 +149,7 @@ export const usePaceCalculator = () => {
   const calcularTempo = () => {
     const km = parseFloat(distanciaInput);
     const paceSegundos = paceParaSegundos(paceInput);
-    if (!km || km === 0 || !paceSegundos || paceSegundos === 0) {
+    if (!km || km === 0 || isNaN(paceSegundos) || paceSegundos === 0) {
       setTempoResultado("");
       setVelocidadeResultado("");
       return;
