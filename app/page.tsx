@@ -87,13 +87,16 @@ export default function Home() {
             />
           )}
 
-        {calculo === "tempo" && tempoResultado && velocidadeResultado && (
-          <Resultado
-            titulo="Tempo"
-            valor={tempoResultado}
-            velocidade={velocidadeResultado}
-          />
-        )}
+        {calculo === "tempo" &&
+          paceInput.length === 5 &&
+          tempoResultado &&
+          velocidadeResultado && (
+            <Resultado
+              titulo="Tempo"
+              valor={tempoResultado}
+              velocidade={velocidadeResultado}
+            />
+          )}
       </div>
     </main>
   );
