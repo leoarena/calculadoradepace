@@ -9,6 +9,7 @@ import {
   paceParaSegundos,
   tempoInputParaSegundos,
 } from "./utils/formatters";
+import InputDistancia from "./components/InputDistancia";
 
 export default function Home() {
   const [calculo, setCalculo] = useState<"pace" | "tempo">("pace");
@@ -152,19 +153,11 @@ export default function Home() {
       <div className={styles.card}>
         <h1 className={styles.titulo}>Calculadora de Pace</h1>
 
-        <div className={styles.containerInput}>
-          <label className={styles.label}>Distância (km)</label>
-          <input
-            type="number"
-            inputMode="decimal"
-            step="0.01"
-            value={distanciaInput}
-            onChange={handleDistanciaInputChange}
-            placeholder="10"
-            className={styles.input}
-            ref={distanciaInputRef}
-          />
-        </div>
+        <InputDistancia
+          value={distanciaInput}
+          onChange={handleDistanciaInputChange}
+          inputRef={distanciaInputRef}
+        />
 
         {calculo === "pace" ? (
           <div className={styles.containerInput}>
