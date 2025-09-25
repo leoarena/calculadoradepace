@@ -148,15 +148,17 @@ export const usePaceCalculator = () => {
 
   const calcularTempo = () => {
     const km = parseFloat(distanciaInput);
-    const paceSegundos = paceParaSegundos(paceInput);
-    if (!km || km === 0 || isNaN(paceSegundos) || paceSegundos === 0) {
+    const paceEmSegundos = paceParaSegundos(paceInput);
+    if (!km || km === 0 || isNaN(paceEmSegundos) || paceEmSegundos === 0) {
       setTempoResultado("");
       setVelocidadeResultado("");
       return;
     }
-    const totalSegundos = paceSegundos * km;
-    const velocidadeEmKmh = (km / (totalSegundos / 3600)).toFixed(2);
-    setTempoResultado(formatarSegundosParaTempo(totalSegundos));
+    const totalSegundos = paceEmSegundos * km;
+    const tempo = formatarSegundosParaTempo(totalSegundos);
+    const totalHoras = totalSegundos / 3600;
+    const velocidadeEmKmh = (km / totalHoras).toFixed(2);
+    setTempoResultado(tempo);
     setVelocidadeResultado(`${velocidadeEmKmh} km/h`);
     ajustarFoco();
   };
