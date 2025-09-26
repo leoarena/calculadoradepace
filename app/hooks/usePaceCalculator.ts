@@ -140,7 +140,7 @@ export const usePaceCalculator = () => {
     const km = parseFloat(distanciaInput);
     const totalSegundos = tempoInputParaSegundos(tempoInput);
 
-    if (!distanciaInput || !km) {
+    if (!km) {
       setMensagemErro("Preencha a distância");
       return;
     }
@@ -151,8 +151,10 @@ export const usePaceCalculator = () => {
     }
 
     const paceEmSegundos = totalSegundos / km;
-    const velocidadeEmKmh = (km / (totalSegundos / 3600)).toFixed(2);
-    setPaceResultado(formatarSegundosParaPace(paceEmSegundos));
+    const pace = formatarSegundosParaPace(paceEmSegundos);
+    const totalHoras = totalSegundos / 3600;
+    const velocidadeEmKmh = (km / totalHoras).toFixed(2);
+    setPaceResultado(pace);
     setVelocidadeResultado(`${velocidadeEmKmh} km/h`);
     setMensagemErro("");
     ajustarFoco();
