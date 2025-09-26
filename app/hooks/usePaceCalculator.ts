@@ -118,7 +118,6 @@ export const usePaceCalculator = () => {
     setTempoInput(valorFormatado);
     limparResultados();
     setMensagemErro("");
-    setTimeout(() => setDeletandoTempoInput(false), 10);
   };
 
   const handleDistanciaInputChange = (
@@ -134,7 +133,6 @@ export const usePaceCalculator = () => {
     setPaceInput(valorFormatado);
     limparResultados();
     setMensagemErro("");
-    setTimeout(() => setDeletandoPaceInput(false), 10);
   };
 
   const calcularPace = () => {
