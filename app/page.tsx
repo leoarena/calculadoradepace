@@ -77,27 +77,21 @@ export default function Home() {
             : "Calcular a partir do tempo"}
         </button>
 
-        {calculo === "pace" &&
-          tempoInput.length === 8 &&
-          paceResultado &&
-          velocidadeResultado && (
-            <Resultado
-              titulo="Pace"
-              valor={paceResultado}
-              velocidade={velocidadeResultado}
-            />
-          )}
+        {paceResultado && velocidadeResultado && (
+          <Resultado
+            titulo="Pace"
+            valor={paceResultado}
+            velocidade={velocidadeResultado}
+          />
+        )}
 
-        {calculo === "tempo" &&
-          paceInput.length === 5 &&
-          tempoResultado &&
-          velocidadeResultado && (
-            <Resultado
-              titulo="Tempo"
-              valor={tempoResultado}
-              velocidade={velocidadeResultado}
-            />
-          )}
+        {tempoResultado && velocidadeResultado && (
+          <Resultado
+            titulo="Tempo"
+            valor={tempoResultado}
+            velocidade={velocidadeResultado}
+          />
+        )}
 
         {mensagemErro && (
           <div className={styles.mensagemErro}>{mensagemErro}</div>

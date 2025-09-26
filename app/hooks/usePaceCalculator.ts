@@ -164,7 +164,7 @@ export const usePaceCalculator = () => {
     const km = parseFloat(distanciaInput);
     const paceEmSegundos = paceParaSegundos(paceInput);
 
-    if (!distanciaInput || !km) {
+    if (!km) {
       setMensagemErro("Preencha a distância");
       return;
     }
