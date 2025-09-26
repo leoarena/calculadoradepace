@@ -84,7 +84,9 @@ export const usePaceCalculator = () => {
     limparCampos();
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleTempoInputKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (e.key === "Backspace") setDeletandoTempoInput(true);
     else setDeletandoTempoInput(false);
   };
@@ -201,7 +203,7 @@ export const usePaceCalculator = () => {
     calcularTempo,
     limparCampos,
     alternarModo,
-    handleKeyDown,
+    handleTempoInputKeyDown,
     handlePaceInputKeyDown,
     handleGlobalKeyDown,
     handleTempoInputChange,
