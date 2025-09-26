@@ -123,6 +123,7 @@ export const usePaceCalculator = () => {
   ) => {
     setDistanciaInput(e.target.value);
     setPaceResultado("");
+    setTempoResultado("");
     setVelocidadeResultado("");
     setMensagemErro("");
   };
