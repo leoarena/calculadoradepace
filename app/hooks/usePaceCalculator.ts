@@ -57,6 +57,12 @@ export const usePaceCalculator = () => {
     }
   };
 
+  const limparResultados = () => {
+    setPaceResultado("");
+    setTempoResultado("");
+    setVelocidadeResultado("");
+  };
+
   const ajustarFoco = () => {
     distanciaInputRef.current?.blur();
     tempoInputRef.current?.blur();
@@ -68,9 +74,7 @@ export const usePaceCalculator = () => {
     setDistanciaInput("");
     setTempoInput("");
     setPaceInput("");
-    setPaceResultado("");
-    setTempoResultado("");
-    setVelocidadeResultado("");
+    limparResultados();
     setMensagemErro("");
     ajustarFoco();
   };
@@ -112,8 +116,7 @@ export const usePaceCalculator = () => {
   const handleTempoInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const valorFormatado = formatarTempoInput(e.target.value);
     setTempoInput(valorFormatado);
-    setPaceResultado("");
-    setVelocidadeResultado("");
+    limparResultados();
     setMensagemErro("");
     setTimeout(() => setDeletandoTempoInput(false), 10);
   };
@@ -122,17 +125,14 @@ export const usePaceCalculator = () => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setDistanciaInput(e.target.value);
-    setPaceResultado("");
-    setTempoResultado("");
-    setVelocidadeResultado("");
+    limparResultados();
     setMensagemErro("");
   };
 
   const handlePaceInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const valorFormatado = formatarPaceInput(e.target.value);
     setPaceInput(valorFormatado);
-    setTempoResultado("");
-    setVelocidadeResultado("");
+    limparResultados();
     setMensagemErro("");
     setTimeout(() => setDeletandoPaceInput(false), 10);
   };
