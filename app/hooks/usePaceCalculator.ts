@@ -17,6 +17,7 @@ export const usePaceCalculator = () => {
   const [paceResultado, setPaceResultado] = useState("");
   const [tempoResultado, setTempoResultado] = useState("");
   const [velocidadeResultado, setVelocidadeResultado] = useState("");
+  const [mensagemErro, setMensagemErro] = useState("");
 
   const distanciaInputRef = useRef<HTMLInputElement>(null);
   const tempoInputRef = useRef<HTMLInputElement>(null);
@@ -70,6 +71,7 @@ export const usePaceCalculator = () => {
     setPaceResultado("");
     setTempoResultado("");
     setVelocidadeResultado("");
+    setMensagemErro("");
     ajustarFoco();
   };
 
@@ -112,6 +114,7 @@ export const usePaceCalculator = () => {
     setTempoInput(valorFormatado);
     setPaceResultado("");
     setVelocidadeResultado("");
+    setMensagemErro("");
     setTimeout(() => setDeletandoTempoInput(false), 10);
   };
 
@@ -121,6 +124,7 @@ export const usePaceCalculator = () => {
     setDistanciaInput(e.target.value);
     setPaceResultado("");
     setVelocidadeResultado("");
+    setMensagemErro("");
   };
 
   const handlePaceInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,38 +132,53 @@ export const usePaceCalculator = () => {
     setPaceInput(valorFormatado);
     setTempoResultado("");
     setVelocidadeResultado("");
+    setMensagemErro("");
     setTimeout(() => setDeletandoPaceInput(false), 10);
   };
 
   const calcularPace = () => {
     const km = parseFloat(distanciaInput);
     const totalSegundos = tempoInputParaSegundos(tempoInput);
-    if (!km || km === 0 || isNaN(totalSegundos) || totalSegundos === 0) {
-      setPaceResultado("");
-      setVelocidadeResultado("");
+
+    if (!distanciaInput || !km) {
+      setMensagemErro("Preencha a distância");
       return;
     }
+
+    if (tempoInput.length !== 8 || isNaN(totalSegundos) || !totalSegundos) {
+      setMensagemErro("Preencha o tempo completo (HH:MM:SS)");
+      return;
+    }
+
     const paceEmSegundos = totalSegundos / km;
     const velocidadeEmKmh = (km / (totalSegundos / 3600)).toFixed(2);
     setPaceResultado(formatarSegundosParaPace(paceEmSegundos));
     setVelocidadeResultado(`${velocidadeEmKmh} km/h`);
+    setMensagemErro("");
     ajustarFoco();
   };
 
   const calcularTempo = () => {
     const km = parseFloat(distanciaInput);
     const paceEmSegundos = paceParaSegundos(paceInput);
-    if (!km || km === 0 || isNaN(paceEmSegundos) || paceEmSegundos === 0) {
-      setTempoResultado("");
-      setVelocidadeResultado("");
+
+    if (!distanciaInput || !km) {
+      setMensagemErro("Preencha a distância");
       return;
     }
+
+    if (paceInput.length !== 5 || isNaN(paceEmSegundos) || !paceEmSegundos) {
+      setMensagemErro("Preencha o pace completo (MM:SS)");
+      return;
+    }
+
     const totalSegundos = paceEmSegundos * km;
     const tempo = formatarSegundosParaTempo(totalSegundos);
     const totalHoras = totalSegundos / 3600;
     const velocidadeEmKmh = (km / totalHoras).toFixed(2);
     setTempoResultado(tempo);
     setVelocidadeResultado(`${velocidadeEmKmh} km/h`);
+    setMensagemErro("");
     ajustarFoco();
   };
 
@@ -172,6 +191,7 @@ export const usePaceCalculator = () => {
     paceResultado,
     tempoResultado,
     velocidadeResultado,
+    mensagemErro,
     distanciaInputRef,
     tempoInputRef,
     paceInputRef,

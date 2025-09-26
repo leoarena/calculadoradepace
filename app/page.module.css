@@ -121,3 +121,13 @@
   font-size: 14px;
   margin-top: 6px;
 }
+
+.mensagemErro {
+  background: #fee;
+  color: #c53030;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-top: 16px;
+  border: 1px solid #fed7d7;
+}

@@ -29,6 +29,7 @@ export default function Home() {
     paceResultado,
     velocidadeResultado,
     tempoResultado,
+    mensagemErro,
   } = usePaceCalculator();
 
   return (
@@ -97,6 +98,10 @@ export default function Home() {
               velocidade={velocidadeResultado}
             />
           )}
+
+        {mensagemErro && (
+          <div className={styles.mensagemErro}>{mensagemErro}</div>
+        )}
       </div>
     </main>
   );
