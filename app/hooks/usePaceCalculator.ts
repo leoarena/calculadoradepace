@@ -115,17 +115,17 @@ export const usePaceCalculator = () => {
     }
   };
 
-  const handleTempoInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const valorFormatado = formatarTempoInput(e.target.value);
-    setTempoInput(valorFormatado);
-    limparResultados();
-    setMensagemErro("");
-  };
-
   const handleDistanciaInputChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setDistanciaInput(e.target.value);
+    limparResultados();
+    setMensagemErro("");
+  };
+
+  const handleTempoInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const valorFormatado = formatarTempoInput(e.target.value);
+    setTempoInput(valorFormatado);
     limparResultados();
     setMensagemErro("");
   };
