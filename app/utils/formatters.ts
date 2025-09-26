@@ -3,7 +3,7 @@ const limitarMinutoSegundo = (valor: string): string => {
   else return valor;
 };
 
-const tempoInputParaSegundos = (tempo: string): number => {
+const tempoParaSegundos = (tempo: string): number => {
   const [horas, minutos, segundos] = tempo.split(":").map(Number);
   const totalSegundos = horas * 3600 + minutos * 60 + segundos;
   return totalSegundos;
@@ -32,7 +32,7 @@ const paceParaSegundos = (pace: string): number => {
 
 export {
   limitarMinutoSegundo,
-  tempoInputParaSegundos,
+  tempoParaSegundos,
   formatarSegundosParaPace,
   formatarSegundosParaTempo,
   paceParaSegundos,

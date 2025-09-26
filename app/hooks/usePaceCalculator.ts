@@ -4,7 +4,7 @@ import {
   formatarSegundosParaTempo,
   limitarMinutoSegundo,
   paceParaSegundos,
-  tempoInputParaSegundos,
+  tempoParaSegundos,
 } from "../utils/formatters";
 
 export const usePaceCalculator = () => {
@@ -138,7 +138,7 @@ export const usePaceCalculator = () => {
 
   const calcularPace = () => {
     const km = parseFloat(distanciaInput);
-    const totalSegundos = tempoInputParaSegundos(tempoInput);
+    const totalSegundos = tempoParaSegundos(tempoInput);
 
     if (!km) {
       setMensagemErro("Preencha a distância");
