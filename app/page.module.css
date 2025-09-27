@@ -131,3 +131,26 @@
   margin-top: 16px;
   border: 1px solid #fed7d7;
 }
+
+.githubLink {
+  position: fixed;
+  bottom: 20px;
+  left: -2px;
+  padding: 12px 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 0 8px 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2c3e50;
+  text-decoration: none;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.githubLink:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateX(2px);
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+}
