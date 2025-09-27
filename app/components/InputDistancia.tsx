@@ -18,6 +18,7 @@ export default function InputDistancia({
         type="number"
         inputMode="decimal"
         step="0.01"
+        min="0"
         value={value}
         onChange={onChange}
         placeholder="10"
