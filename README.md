@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Calculadora de Pace
 
-## Getting Started
+Aplicação web para calcular pace de corrida ou tempo. Útil para corredores planejarem treinos e provas.
 
-First, run the development server:
+## Funcionalidades
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- ✅ Calcular pace a partir de tempo e distância
+- ✅ Calcular tempo necessário a partir de pace e distância
+- ✅ Interface responsiva e acessível
+- ✅ Navegação por teclado (Tab, Enter, Esc)
+- ✅ Validação de entrada
+- ✅ Formatação automática de tempo
+
+## Como usar
+
+1. Preencha dois dos três campos (distância, tempo ou pace)
+2. Pressione Enter ou clique em "Calcular"
+3. O terceiro valor será calculado automaticamente
+4. Use Esc para limpar os campos
+
+## Tecnologias
+
+- **Next.js 14** - Framework React
+- **TypeScript** - Tipagem estática
+- **CSS Modules** - Estilização modular
+- **React Hooks** - Gerenciamento de estado customizado
+
+## Estrutura do projeto
+
+```
+app/
+├── components/          # Componentes React
+│   ├── InputDistancia.tsx
+│   ├── InputTempo.tsx
+│   ├── InputPace.tsx
+│   └── Resultado.tsx
+├── hooks/              # Hooks customizados
+│   └── usePaceCalculator.ts
+├── page.tsx           # Página principal
+└── page.module.css    # Estilos
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Instalação e execução
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Instalar dependências
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Executar em desenvolvimento
+npm run dev
+```
 
-## Learn More
+Abra [http://localhost:3000](http://localhost:3000) no navegador.
 
-To learn more about Next.js, take a look at the following resources:
+## Atalhos de teclado
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Tab** - Navegar entre campos
+- **Enter** - Calcular resultado
+- **Esc** - Limpar todos os campos
