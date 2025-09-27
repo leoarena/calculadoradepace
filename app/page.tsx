@@ -20,7 +20,6 @@ export default function Home() {
     tempoInputRef,
     paceInput,
     handlePaceInputChange,
-    handlePaceInputKeyDown,
     paceInputRef,
     calcularPace,
     calcularTempo,
@@ -57,7 +56,6 @@ export default function Home() {
           <InputPace
             value={paceInput}
             onChange={handlePaceInputChange}
-            onKeyDown={handlePaceInputKeyDown}
             inputRef={paceInputRef}
           />
         )}

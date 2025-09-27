@@ -12,7 +12,6 @@ export const usePaceCalculator = () => {
   const [distanciaInput, setDistanciaInput] = useState("");
   const [tempoInput, setTempoInput] = useState("");
   const [paceInput, setPaceInput] = useState("");
-  const [deletandoPaceInput, setDeletandoPaceInput] = useState(false);
   const [paceResultado, setPaceResultado] = useState("");
   const [tempoResultado, setTempoResultado] = useState("");
   const [velocidadeResultado, setVelocidadeResultado] = useState("");
@@ -32,17 +31,10 @@ export const usePaceCalculator = () => {
   };
 
   const formatarPaceInput = (valor: string): string => {
-    const valorSanitizado = valor.replace(/\D/g, "").slice(0, 4);
-
-    if (paceInput.length === 3 && deletandoPaceInput) {
-      return paceInput.slice(0, -2);
-    } else if (valorSanitizado.length < 2) {
-      return valorSanitizado;
-    } else {
-      const minutos = limitarMinutoSegundo(valorSanitizado.slice(0, 2));
-      const segundos = limitarMinutoSegundo(valorSanitizado.slice(2));
-      return `${minutos}:${segundos}`;
-    }
+    const valorSanitizado = valor.replace(/\D/g, "").slice(-4).padStart(4, "0");
+    const minutos = limitarMinutoSegundo(valorSanitizado.slice(0, 2));
+    const segundos = limitarMinutoSegundo(valorSanitizado.slice(2));
+    return `${minutos}:${segundos}`;
   };
 
   const limparResultados = () => {
@@ -70,11 +62,6 @@ export const usePaceCalculator = () => {
   const alternarModo = () => {
     setCalculo(calculo === "pace" ? "tempo" : "pace");
     limparCampos();
-  };
-
-  const handlePaceInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Backspace") setDeletandoPaceInput(true);
-    else setDeletandoPaceInput(false);
   };
 
   const handleGlobalKeyDown = (e: React.KeyboardEvent) => {
@@ -152,7 +139,7 @@ export const usePaceCalculator = () => {
     }
 
     if (paceInput.length !== 5 || isNaN(paceEmSegundos) || !paceEmSegundos) {
-      setMensagemErro("Preencha o pace completo (MM:SS)");
+      setMensagemErro("Preencha o pace");
       return;
     }
 
@@ -183,7 +170,6 @@ export const usePaceCalculator = () => {
     calcularTempo,
     limparCampos,
     alternarModo,
-    handlePaceInputKeyDown,
     handleGlobalKeyDown,
     handleTempoInputChange,
     handleDistanciaInputChange,
